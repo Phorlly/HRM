@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRMS</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/assets/images/group.png" />
+
+    @*==========style css===========*@
+    @Html.Partial("_StyleCSS")
+
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div class="container-fluid">
+
+        @*==========header of content===========*@
+        <header id="page-topbar">
+            @*@Html.Partial("_Header")*@
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <input type="hidden" name="id" id="id" value="Session[" userId"]" />
+
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="@Url.Action("Index","Home")" class="logo logo-dark">
+                            <span class="logo-lg">
+                                <img src="~/assets/images/sms.png" alt="logo-dark" height="20">
+                                JLS
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="card-group">
+                        @Html.Partial("_LeftMenu")
+                    </div>
+                </div>
+
+                @*Right Menu*@
+                <div class="d-flex">
+                    @*Button Full Screen*@
+                    <div class="dropdown d-none d-lg-inline-block ms-1">
+                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                            <i class="ri-fullscreen-line" style="color: #fff;"></i>
+                        </button>
+                    </div>
+
+                    @*Profile header*@
+                    <div class="dropdown d-inline-block">
+                        @Html.Partial("_Profile")
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        @*====================Start right Content here======================*@
+    <main class="main-content">
+        <div class="page-content">
+            <div class="card-body">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @*==================footer of content=================*@
+    <footer id="footer" class="container-fluid">
+        @Html.Partial("_Footer")
+    </footer>
+
+    @*==================script js=================*@
+    @Html.Partial("_ScriptJS")
+</body>
+</html>
