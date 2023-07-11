@@ -1,0 +1,24 @@
+﻿<button type="button" class="btn header-item"
+        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #e95420;">
+    @if (Session["photo"] == null || Session["userName"] == null)
+    {
+        <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-7.jpg"
+             alt="Header Avatar">
+        <span class="d-none d-xl-inline-block ms-1">Administrator</span>
+    }
+    else
+    {
+        <img class="rounded-circle header-profile-user" src="~/Images/@Session["photo"]"
+             alt="Header Avatar">
+        <span class="d-none d-xl-inline-block ms-1">@Session["userName"]</span>
+    }
+    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+</button>
+
+<div class="dropdown-menu dropdown-menu-end">
+    <!-- item-->
+    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#event-modal"><i class="ri-user-line align-middle me-1"></i> Profile</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item text-danger" type="button" onclick="logout();"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
+</div>
+

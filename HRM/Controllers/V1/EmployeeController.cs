@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HRM.Controllers
+namespace HRM.Controllers.V1
 {
     public class EmployeeController : Controller
     {

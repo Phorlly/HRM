@@ -1,23 +1,110 @@
-﻿<button type="button" class="btn header-item"
-        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #e95420;">
-    @if (Session["photo"] == null || Session["userName"] == null)
-    {
-        <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-7.jpg"
-             alt="Header Avatar">
-        <span class="d-none d-xl-inline-block ms-1">Administrator</span>
-    }
-    else
-    {
-        <img class="rounded-circle header-profile-user" src="~/Images/@Session["photo"]"
-             alt="Header Avatar">
-        <span class="d-none d-xl-inline-block ms-1">@Session["userName"]</span>
-    }
-    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-</button>
+﻿<!-- Add New Event MODAL -->
+<div class="modal fade" id="event-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin-left: 7rem;">User Account Information</h5>
+            </div>
 
-<div class="dropdown-menu dropdown-menu-end">
-    <!-- item-->
-    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#event-modal"><i class="ri-user-line align-middle me-1"></i> Profile</button>
-    <div class="dropdown-divider"></div>
-    <button class="dropdown-item text-danger" type="button" onclick="logout();"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
+            <div class="modal-body p-4">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>User Id: </p>
+                                <p>Full Name: </p>
+                                <p>Gender: </p>
+                                <p>Eamil Addess: </p>
+                                <p>Phone Number: </p>
+                                <p>Addess: </p>
+                                <p>User Privileges: </p>
+                                <p>Created At: </p>
+                                <p>Status: </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Session["userId"]</p>
+                                <p>@Session["userName"]</p>
+                                @if ((bool)Session["sex"] == true)
+                                {
+                                    <p>Male</p>
+                                }
+                                else
+                                {
+                                    <p>Female</p>
+                                }
+                                <p>@Session["emailAddess"]</p>
+                                <p>@Session["phone"]</p>
+                                <p>@Session["address"]</p>
+                                @if ((bool)Session["isAdmin"] == true)
+                                {
+                                    <p>Admin</p>
+                                }
+                                else
+                                {
+                                    <p>User</p>
+                                }
+                                <p>@Session["createdAt"]</p>
+
+                                @if ((bool)Session["status"] == true)
+                                {
+                                    <p>Active</p>
+                                }
+                                else
+                                {
+                                    <p>Inactive</p>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        @if (Session["photo"] == null)
+                        {
+                            <img class="rounded-circle header-profile-user avatar-lg" src="/assets/images/users/avatar-7.jpg" alt="Header Avatar">
+                        }
+                        else
+                        {
+                            <img class="rounded-circle header-profile-user  avatar-lg" src="~/Images/@Session["photo"]" alt="Header Avatar">
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end modal-content-->
+    </div>
+    <!-- end modal dialog-->
 </div>
+<!-- end modal-->
+
+<script>
+    logout = () => {
+        $.ajax({
+
+            url: "/Auth/LogOut",
+
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "JSON",
+
+            //function success =================If Succuss==============================
+            success: (result) => {
+                if (result.success) {
+                    toastr.success(result.message, "Sever Response !");
+
+                    // Optionally redirect to another page
+                    window.location.href = "/Auth/LogIn";
+
+                }
+
+            },
+            //function error =====================If Error==============================
+            error: (err) => {
+                toastr.error(err.message, "Sever Response !");
+            }
+
+        });
+
+    }
+</script>

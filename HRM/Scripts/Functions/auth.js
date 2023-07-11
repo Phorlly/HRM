@@ -51,19 +51,19 @@ $(document).ready(() => {
     });
 
     //===================validate control login======================//
-    const validateLogin = () => {
+    validateLogin = () => {
 
         var isValid = true;
 
         if ($('#email').val() === "") {
-            toastr.error("Please Input the Email Address", "Server Resonse");
+            toastr.info("Please Input the Email Address", "Server Resonse");
             $('#email').css('border-color', 'red');
             $('#email').focus();
             isValid = false;
         } else {
             $('#email').css('border-color', '#cccccc');
             if ($('#password').val() === "") {
-                toastr.error("Please Input the Password", "Server Resonse");
+                toastr.info("Please Input the Password", "Server Resonse");
                 $('#password').css('border-color', 'red');
                 $('#password').focus();
                 isValid = false;
@@ -112,7 +112,7 @@ $(document).ready(() => {
     });
 
     //===================clear control==============================//
-    const clear = () => {
+    clear = () => {
         $("#username").val("");
         $("#email").val("");
         $("#gender").val("Male");
@@ -124,7 +124,7 @@ $(document).ready(() => {
     }
 
     //================validate control register====================//
-    const validateRegister = () => {
+    validateRegister = () => {
         let isValid = true;
         if ($('#username').val() === "") {
             toastr.info("Please Input the Username", "Server Resonse");

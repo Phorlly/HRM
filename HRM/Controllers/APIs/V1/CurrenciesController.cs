@@ -1,25 +1,23 @@
 ﻿using AutoMapper;
 using HRM.DTOs;
 using HRM.Models;
-using MailChimp.Net.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Web.UI.WebControls;
 
-namespace HRM.Controllers.APIs
+namespace HRM.Controllers.APIs.V1
 {
-    [RoutePrefix("api/hr-employee")]
-    public class EmployeesController : ApiController
+    [RoutePrefix("api/v1/hr-currencies")]
+    public class CurrenciesController : ApiController
     {
         protected readonly ApplicationDbContext connx;
         //===========================================Open Connection==================================//
-        public EmployeesController()
+        public CurrenciesController()
         {
             connx = new ApplicationDbContext();
         }
@@ -37,14 +35,14 @@ namespace HRM.Controllers.APIs
         {
             try
             {
-                var datas = connx.Employees.Select(Mapper.Map<Employee, EmployeeDto>).Where(c => c.Status.Equals(true)).ToList();
+                var datas = connx.Currencies.Select(Mapper.Map<Currency, CurrencyDto>).Where(c=>c.Status.Equals(true)).ToList();
                 if (datas == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(new { info = datas, statusCode = 200, message = "Successfully Query All  Data.!" });
+                    return Ok(datas);
                 }
             }
             catch (Exception except)
@@ -60,15 +58,15 @@ namespace HRM.Controllers.APIs
         {
             try
             {
-                var findById = connx.Employees.FirstOrDefault(c => c.Id.Equals(id) && c.Status.Equals(true));
+                var findById = connx.Currencies.FirstOrDefault(c=>c.Id.Equals(id) && c.Status.Equals(true));
                 if (findById.Equals(null))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var dataById = Mapper.Map<Employee, EmployeeDto>(findById);
-                    return Ok(new { data = dataById, statusCode = 200, message = "Successfully Query One Data.!" });
+                    var dataById = Mapper.Map<Currency, CurrencyDto>(findById);
+                    return Ok(dataById);
                 }
             }
             catch (Exception except)
@@ -81,65 +79,26 @@ namespace HRM.Controllers.APIs
         //============================================POST: Data====================================//
         [HttpPost]
         [Route("post")]
-        public IHttpActionResult PostData(EmployeeDto dataObject, HttpPostedFileBase imageFile)
+        public IHttpActionResult PostData(CurrencyDto dataObject)
         {
             try
             {
-                //var first = HttpContext.Current.Request.Form["FirstName"];
-                //var last = HttpContext.Current.Request.Form["LastName"];
-                //var code = HttpContext.Current.Request.Form["Code"];
-                //var sex = HttpContext.Current.Request.Form["Sex"];
-                //var email = HttpContext.Current.Request.Form["Email"];
-                //var phone = HttpContext.Current.Request.Form["Phone"];
-                //var position = HttpContext.Current.Request.Form["Position"];
-                //var address = HttpContext.Current.Request.Form["Address"]; 
-                //var pob = HttpContext.Current.Request.Form["PlaceOfBirth"]; 
-                //var photo = HttpContext.Current.Request.Files["Profile"];
-                //var start = HttpContext.Current.Request.Form["StartedAt"];
-                //var end = HttpContext.Current.Request.Form["EndedAt"];
-                //var dob = HttpContext.Current.Request.Form["DateOfBirth"];
-                //var age = HttpContext.Current.Request.Form["Age"];
-                //var currencyId = HttpContext.Current.Request.Form["CurrencyId"];
-                //var salary = HttpContext.Current.Request.Form["InitialSalary"];
-                //var status = HttpContext.Current.Request.Form["Status"]; 
-
                 //Data Exist not insert into Database
-                var isExists = connx.Employees.SingleOrDefault(c => c.LastName.Equals(dataObject.LastName));
+                var isExists = connx.Currencies.SingleOrDefault(c => c.Name.Equals(dataObject.Name));
                 if (isExists != null)
                 {
-                    return BadRequest("The Data is Already Exist in Database.!");
+                    return BadRequest("The Data is Already Exist in Database !");
                 }
                 else
                 {
                     dataObject.CreatedAt = DateTime.Now;
                     dataObject.Status = true;
-                    // Save the uploaded image
-                    if (imageFile != null && imageFile.ContentLength > 0)
-                    {
-                        var photoName = Path.Combine(Path.GetDirectoryName(imageFile.FileName)
-                                 , string.Concat(Path.GetFileNameWithoutExtension(imageFile.FileName)
-                                 , DateTime.Now.ToString("-yyyy-MM-dd-HH-mm-ss")
-                                 , Path.GetExtension(imageFile.FileName)));
-
-                        var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Images"), photoName);
-                        imageFile.SaveAs(fileSavePath);
-
-                        dataObject.Profile = photoName;
-                    }
-
-                    var currentDate = DateTime.Today;
-                    dataObject.Age = currentDate.Year - dataObject.DateOfBirth.Year;
-
-                    if (currentDate < dataObject.DateOfBirth.AddYears(dataObject.Age))
-                    {
-                        dataObject.Age--; // Adjust age if the current date is before the birth date in the current year
-                    }
 
                     //Convert from Dto to Model
-                    var add = Mapper.Map<EmployeeDto, Employee>(dataObject);
+                    var add = Mapper.Map<CurrencyDto, Currency>(dataObject);
 
                     // Save the data to the database
-                    connx.Employees.Add(add);
+                    connx.Currencies.Add(add);
                     connx.SaveChanges();
 
                     // SaveData(data);
@@ -156,25 +115,25 @@ namespace HRM.Controllers.APIs
         //============================================PUT: Data by Id==============================//
         [HttpPut]
         [Route("put/{id}")]
-        public IHttpActionResult PutDataById(EmployeeDto dataObject, int id)
+        public IHttpActionResult PutDataById(CurrencyDto dataObject, int id)
         {
             try
             {
-                var data = connx.Employees.SingleOrDefault(c => c.Id.Equals(id));
+                var data = connx.Currencies.SingleOrDefault(c => c.Id.Equals(id));
                 if (data == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    if (data.LastName == dataObject.LastName​​​)
+                    if (data.Name == dataObject.Name​​​)
                     {
                         dataObject.UpdatedAt = DateTime.Now;
                         data.UpdatedAt = dataObject.UpdatedAt;
                         data.Status = dataObject.Status;
-                        data.LastName = dataObject.LastName;
+                        data.Name = dataObject.Name;
                         data.Code = dataObject.Code;
-                        data.Email = dataObject.Email;
+                        data.Symbol = dataObject.Symbol;
                         data.Status = dataObject.Status;
 
                         //Convert from Dto to Model
@@ -185,15 +144,15 @@ namespace HRM.Controllers.APIs
                         return Ok(new { dataUpdated = data, statusCode = 200, message = "Successfully Only Data Updated.!" });
                     }
 
-                    var isExist = connx.Employees.FirstOrDefault(c => c.LastName == dataObject.LastName);
+                    var isExist = connx.Currencies.FirstOrDefault(c => c.Name == dataObject.Name);
                     if (isExist == null)
                     {
                         dataObject.UpdatedAt = DateTime.Now;
                         data.UpdatedAt = dataObject.UpdatedAt;
                         data.Status = dataObject.Status;
-                        data.LastName = dataObject.LastName;
+                        data.Name = dataObject.Name;
                         data.Code = dataObject.Code;
-                        data.Email = dataObject.Email;
+                        data.Symbol = dataObject.Symbol;
 
                         //Convert from Dto to Model
                         //var update = Mapper.Map(dataObject, data);
@@ -223,14 +182,14 @@ namespace HRM.Controllers.APIs
         {
             try
             {
-                var data = connx.Employees.Find(id);
+                var data = connx.Currencies.Find(id);
                 if (data == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    //connx.Employees.Remove(data); 
+                    //connx.Currencies.Remove(data); 
                     data.Status = false;
                     data.DeletedAt = DateTime.Now;
 

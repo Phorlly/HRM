@@ -1,2 +1,59 @@
-﻿
-<h2>Index</h2>
+﻿<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card card-header-pills" style="background: beige;">
+                <div class="row p-2">
+                    <div class="col-10 pt-2">
+                        <h3 class="text-center">Employees List</h3>
+                    </div>
+                    <div class="col-2 pt-2">
+                        <button class="btn btn-primary btn-sm btn-rounded" id="addNew" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="fas fa-plus-circle"></i> Add New
+                        </button>
+                        <button class="btn btn-danger btn-sm btn-rounded" id="refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        @*<button class="btn btn-danger btn-sm btn-rounded">Add New</button>*@
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading-gif"></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    @*id="datatable-buttons"*@
+                    <table id="user-table" class="datatable-buttons table table-striped table-bordered dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Full Name</th>
+                                <th>Gender</th>
+                                <th>Photo</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Created​ At</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                @*<div class="d-print-none">
+                    <div class="float-end">
+                        <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>
+                        <a href="#" class="btn btn-primary waves-effect waves-light ms-2">Send</a>
+                    </div>
+                </div>*@
+            </div>
+            </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+@Html.Partial("_User")
+@section scripts{
+    @Scripts.Render("~/Scripts/Functions/users.js")
+}
+

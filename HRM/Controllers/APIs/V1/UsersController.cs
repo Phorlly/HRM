@@ -17,9 +17,9 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Razor.Parser.SyntaxTree;
 
-namespace HRM.Controllers.APIs
+namespace HRM.Controllers.APIs.V1
 {
-    [RoutePrefix("api/hr-user")]
+    [RoutePrefix("api/v1/hr-users")]
     public class UsersController : ApiController
     {
         protected readonly ApplicationDbContext connx;
@@ -51,7 +51,7 @@ namespace HRM.Controllers.APIs
                 else
                 {
                     await Task.Delay(1000);
-                    return Ok(new { info = datas, statusCode = 200, message = "Successfully Query All  Data.!" });
+                    return Ok(datas);
                 }
             }
             catch (Exception except)
@@ -78,7 +78,7 @@ namespace HRM.Controllers.APIs
                 {
                     await Task.Delay(1000);
                     var dataById = Mapper.Map<User, UserDto>(findById);
-                    return Ok(new { data = dataById, statusCode = 200, message = "Successfully Query One Data.!" });
+                    return Ok(dataById);
                 }
             }
             catch (Exception except)

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 
-namespace HRM.Controllers
+namespace HRM.Controllers.V1
 {
     public class AuthController : Controller
     {
@@ -49,32 +49,22 @@ namespace HRM.Controllers
             }
 
         }
+
         //==========================================LogIn into system=========================//
-        // GET: Auth 
         [HttpGet]
         public ActionResult LogIn()
         {
-            try
+            if (Session["userId"] == null)
             {
-                if (Session["userId"] == null)
-                {
-                    //return RedirectToAction("LogIn", "Auth");
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return View();
             }
-            catch
+            else
             {
                 return RedirectToAction("Index", "Home");
             }
-
         }
 
-
-        // POST: Auth
+        //===============================LogIn into system=========================//
         [HttpPost]
         public JsonResult LogIn(User user)
         {
@@ -132,24 +122,17 @@ namespace HRM.Controllers
         [Route("create-account")]
         public ActionResult Register()
         {
-            try
+            if (Session["userId"] == null)
             {
-                if (Session["userId"] == null)
-                {
-                    //return RedirectToAction("LogIn", "Auth");
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return View();
             }
-            catch
+            else
             {
                 return RedirectToAction("Index", "Home");
             }
         }
 
+        //===============================Register account=============================//
         [HttpPost]
         public JsonResult Register(User user, HttpPostedFileBase imageFile)
         {
@@ -159,8 +142,8 @@ namespace HRM.Controllers
                 {
 
                     //Data Exist not insert into Database
-                    var chkUser = context.Users.SingleOrDefault(c => c.Email.Equals(user.Email));
-                    if (chkUser == null)
+                    var checkUser = context.Users.SingleOrDefault(c => c.Email.Equals(user.Email));
+                    if (checkUser == null)
                     {
                         // Save the uploaded image
                         if (imageFile != null && imageFile.ContentLength > 0)
@@ -201,6 +184,5 @@ namespace HRM.Controllers
 
             return Json(user);
         }
-
     }
 }

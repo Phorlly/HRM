@@ -10,6 +10,7 @@
 
     @*==========style css===========*@
     @Html.Partial("_StyleCSS")
+    @Scripts.Render("~/bundles/modernizr")
 
 </head>
 
@@ -22,15 +23,14 @@
             @*@Html.Partial("_Header")*@
             <div class="navbar-header">
                 <div class="d-flex">
-                    <input type="hidden" name="id" id="id" value="Session[" userId"]" />
 
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
                         <a href="@Url.Action("Index","Home")" class="logo logo-dark">
                             <span class="logo-lg">
-                                <img src="~/assets/images/sms.png" alt="logo-dark" height="20">
-                                JLS
-                            </span>
+                                <img src="~/assets/images/sms.png" class="rounded-circle avatar-sm" alt="logo-dark" height="50">
+                            </span >
+                            <span style="font-size:12px; color:white;">JING-LONG-SECURITY</span>
                         </a>
                     </div>
 
@@ -43,38 +43,77 @@
                 <div class="d-flex">
                     @*Button Full Screen*@
                     <div class="dropdown d-none d-lg-inline-block ms-1">
-                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                            <i class="ri-fullscreen-line" style="color: #fff;"></i>
+                        <button type="button" class="fullScreen btn header-item noti-icon waves-effect">
+                            <i class="fas fa-expand" style="color: #fff;"></i>
                         </button>
                     </div>
 
                     @*Profile header*@
                     <div class="dropdown d-inline-block">
-                        @Html.Partial("_Profile")
+                        @Html.Partial("_ButtonRight")
                     </div>
                 </div>
             </div>
+            <label class="progress-bar"></label>
         </header>
-
+        
         @*====================Start right Content here======================*@
-    <main class="main-content">
-        <div class="page-content">
-            <div class="card-body">
-                @RenderBody()
+        <main class="main-content">
+            <div class="page-content">
+                <div class="card-body">
+                    @Html.Partial("_Profile")
+                    @RenderBody()
+
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
         <!-- end main content-->
 
     </div>
     <!-- END layout-wrapper -->
-
     @*==================footer of content=================*@
     <footer id="footer" class="container-fluid">
         @Html.Partial("_Footer")
     </footer>
 
     @*==================script js=================*@
+    @Scripts.Render("~/bundles/jquery")
     @Html.Partial("_ScriptJS")
+    <script>
+        let myElement = document.documentElement;
+        let btn = document.querySelector('.fullScreen');
+        let icon = btn.querySelector('.fa-expand');
+
+        btn.addEventListener('click', () => {
+            if (icon.classList.contains('fa-expand')) {
+                if (myElement.requestFullscreen) {
+                    myElement.requestFullscreen();
+                }
+                else if (myElement.msRequestFullscreen) {
+                    myElement.msRequestFullscreen();
+                } else if (myElement.mozRequestFullscreen) {
+                    myElement.mozRequestFullscreen();
+                } else if (myElement.webkitRequestFullscreen) {
+                    myElement.webkitRequestFullscreen();
+                }
+
+                icon.classList.replace('fa-expand', 'fa-expand-arrows-alt');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msexitFullScreen) {
+                    document.msexitFullScreen();
+                } else if (document.mozexitFullscreen) {
+                    document.mozexitFullscreen();
+                } else if (document.webkitexitRequestFullscreen) {
+                    document.webkitexitFullscreen();
+                }
+
+                icon.classList.replace('fa-expand-arrows-alt', 'fa-expand');
+            }
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>

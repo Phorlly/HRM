@@ -235,12 +235,12 @@
     <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\APIs\CurrenciesController.cs" />
-    <Compile Include="Controllers\APIs\EmployeesController.cs" />
-    <Compile Include="Controllers\APIs\UsersController.cs" />
-    <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\APIs\V1\CurrenciesController.cs" />
+    <Compile Include="Controllers\APIs\V1\EmployeesController.cs" />
+    <Compile Include="Controllers\APIs\V1\UsersController.cs" />
+    <Compile Include="Controllers\V1\AuthController.cs" />
+    <Compile Include="Controllers\V1\EmployeeController.cs" />
+    <Compile Include="Controllers\V1\HomeController.cs" />
     <Compile Include="DTOs\AttendanceDto.cs" />
     <Compile Include="DTOs\CurrencyDto.cs" />
     <Compile Include="DTOs\EmployeeDto.cs" />
@@ -1522,6 +1522,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Functions\auth.js" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\Functions\users.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
@@ -1532,6 +1533,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1554,6 +1559,10 @@
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Scripts\moment.min.js.map" />
+    <Content Include="Scripts\moment-with-locales.min.js.map" />
+    <Content Include="Views\Shared\_ButtonRight.cshtml" />
+    <Content Include="Views\Employee\_User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\libs\bootstrap-filestyle2\src\" />
@@ -1621,6 +1630,7 @@
     <Folder Include="assets\libs\toastr\node_modules\jquery\src\" />
     <Folder Include="assets\libs\toastr\tests\" />
     <Folder Include="assets\libs\twitter-bootstrap-wizard\examples\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
