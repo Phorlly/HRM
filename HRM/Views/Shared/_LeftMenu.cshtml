@@ -1,15 +1,15 @@
 ﻿@if ((bool)Session["isAdmin"] == true)
 {
     @*Main Menu*@
-    <div class="dropdown d-inline-block">
-        <button type="button" class="btn header-item back-color"
+    <div class="dropdown d-inline-block pt-2">
+        <button type="button" class="btn header-item"
                 data-bs-toggle="dropdown" aria-haspopup="true" style="background: #e95420;">
             Employees <i class="mdi mdi-chevron-down d-none d-xl-inline-block "></i>
         </button>
 
         <div class="dropdown-menu dropdown-menu-end">
             <!-- item-->
-            <a class="dropdown-item" href="@Url.Action("Index", "Employee")" > <i class="ri-user-line align-middle me-1"></i> Employees</a>
+            <a class="dropdown-item" href="@Url.Action("Index", "Employee")"> <i class="ri-user-line align-middle me-1"></i> Employees</a>
             @*<a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>*@
             <div class="dropdown-divider"></div>
             <button class="dropdown-item text-danger" type="button" onclick="logout();"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
@@ -17,8 +17,8 @@
     </div>
 
     @*Main Menu*@
-    <div class="dropdown d-inline-block">
-        <button type="button" class="btn header-item back-color"
+    <div class="dropdown d-inline-block pt-2">
+        <button type="button" class="btn header-item"
                 data-bs-toggle="dropdown" aria-haspopup="true" style="background: #e95420;">
             Employees  <i class="mdi mdi-chevron-down d-none d-xl-inline-block "></i>
         </button>
@@ -34,7 +34,35 @@
 }
 else
 {
-    <div>
-        <h3>Users</h3>
+    @*Main Menu*@
+    <div class="dropdown d-inline-block pt-2">
+        <button type="button" class="btn header-item"
+                data-bs-toggle="dropdown" aria-haspopup="true" style="background: #e95420;">
+            Employees  <i class="mdi mdi-chevron-down d-none d-xl-inline-block "></i>
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-end">
+            <!-- item-->
+            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#event-modal"><i class="ri-user-line align-middle me-1"></i> Profile</button>
+            @*<a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>*@
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-danger" type="button" onclick="logout();"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
+        </div>
+    </div>
+
+    @*Main Menu*@
+    <div class="dropdown d-inline-block pt-2">
+        <button type="button" class="btn header-item"
+                data-bs-toggle="dropdown" aria-haspopup="true" style="background: #e95420;">
+            Currencies  <i class="mdi mdi-chevron-down d-none d-xl-inline-block "></i>
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-end">
+            <!-- item-->
+            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#event-modal"><i class="ri-user-line align-middle me-1"></i> Profile</button>
+            @*<a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>*@
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-danger" type="button" onclick="logout();"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
+        </div>
     </div>
 }

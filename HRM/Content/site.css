@@ -22,6 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }*/
+.dropdown-item {
+    cursor: pointer;
+}
+.mr-1{
+    margin-right: 10px;
+}
 
 #loginPanel {
     margin-top: 50px;
@@ -55,7 +61,7 @@ textarea {
     margin-top: 1rem;
 }
 
-.btn-style input[type="file"] {
+    .btn-style input[type="file"] {
         cursor: pointer;
         position: absolute;
         left: 0%;
@@ -63,17 +69,21 @@ textarea {
         transform: scale(3);
         opacity: 0;
     }
+
 #page-topbar {
     background-color: #e95420;
     border-color: #d34615;
     color: #fff;
 }
+
 .btn {
     color: #fff;
 }
-.btn:hover {
-    color: #fff;
-}
+
+    .btn:hover {
+        color: #fff;
+    }
+
 #footer {
     background-color: #e95420;
     padding-top: 10px;
@@ -86,10 +96,8 @@ textarea {
     padding-right: 20px;
     padding-left: 20px;
 }
-.back-color {
-    background: #e95420;
-}
-#loading-gif.show{
+
+#loading-gif.show {
     display: block;
     position: fixed;
     z-index: 100;
@@ -101,4 +109,15 @@ textarea {
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+
+.dropdown button, .dropdown-menu button {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'Poppins',sans-serif;
+    text-align: center;
+    text-decoration: none;
+    transition: all .25s ease;
 }

@@ -1,4 +1,4 @@
-﻿jQuery(document).ready(() => {
+﻿$(document).ready(() => {
     //loading gif
     $(document).ajaxStart(() => {
         $('#loading-gif').addClass('show');
@@ -36,9 +36,18 @@
         columns: [
             {
                 data: "id",
-                render: (data) => {
-                    return "<button onclick= 'editdata(" + data + ")' class= 'btn btn-warning btn-sm btn-rounded'><span class='fas fa-edit'></span></button> " +
-                        "<button onclick= 'removeData(" + data + ")' class= 'btn btn-danger btn-sm btn-rounded' ><span class='fas fa-trash-alt'></span></button>";
+                render: data => {
+                    return `<div class="dropdown ">
+                                <button type="button" class="btn btn-sm btn-rounded btn-info" data-bs-toggle="dropdown">
+                                    <i class="ri-more-2-fill"></i>
+                                </button>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" onclick= 'editdata(${data})'> <i class="fas fa-edit align-middle mr-1"></i> Edit</a>
+                                    <a class="dropdown-item" onclick= 'removeData(${data})'><i class="fas fa-trash-alt align-middle mr-1"></i> Delete</a>
+                                    <a class="dropdown-item" onclick= 'viewData(${data})'><i class="ri-eye-fill align-middle mr-1"></i> View</a>
+                                </div>
+                           </div>`;      
                 }
             },
             {
@@ -46,7 +55,7 @@
             },
             {
                 data: "gender",
-                render: (data) => {
+                render: data => {
                     if (data === true) {
                         return "Male";
                     } else {
@@ -56,7 +65,7 @@
             },
             {
                 data: "photo",
-                render: (data) => {
+                render: data => {
                     if (data == null || data == "") {
                         return "<img src='../Images/blank-image.png' class='rounded-circle'  width='40px'/>";
                     }
@@ -73,7 +82,7 @@
             },
             {
                 data: "isAdmin",
-                render: (data) => {
+                render: data => {
                     if (data === true) {
                         return "Admin";
                     } else {
@@ -84,7 +93,7 @@
             },
             {
                 data: "createdAt",
-                render: (data) => {
+                render: data => {
                     if (data != null) {
                         return moment(data).fromNow();
                     }
@@ -95,7 +104,7 @@
             },
             {
                 data: "status",
-                render: (data) => {
+                render: data => {
                     if (data === true) {
                         return "Active";
                     } else {
@@ -119,7 +128,7 @@
     });
 
     //reload data
-    refresh.on('click', (event) => {
+    refresh.click(event => {
         event.preventDefault();
         reloadData.ajax.reload();
         //location.reload();
@@ -142,29 +151,29 @@
             confirmButtonClass: "btn btn-success mt-2",
             cancelButtonClass: "btn btn-danger ms-2 mt-2",
             buttonsStyling: !1
-        }).then((param) => {
+        }).then(param => {
             param.value ? $.ajax({
-                method: "GET",
-                url: "/api/hr-users/get/" + id,
+                method: "DELETE",
+                url: "/api/v1/hr-users/delete/" + id,
                 //if succuss
-                success: (result) => {
-                    //table.ajax.reload();
+                success: result => {
+                    reloadData.ajax.reload();
                     Swal.fire({
                         title: "Deleted!",
-                        text: "Your file has been deleted. (" + result.username + ")",
+                        text: "Your file has been deleted.",
                         icon: "success"
                     });
                 },
                 //if error
-                error: (error) => {
-                    toastr.error(error.message, "Server Resonse");
+                error: error => {
+                    toastr.error("Something what happen?", "Server Resonse");
                 }
             }) : param.dismiss === Swal.DismissReason.cancel && Swal.fire({
                 title: "Cancelled",
                 text: "Your imaginary file is safe :)",
                 icon: "error"
             })
-        }).catch((err) => console.log(err.message));
+        }).catch(err => console.log(err.message));
 
     }
 });
